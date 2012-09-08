@@ -9,8 +9,8 @@ class Stack
 public:
 	Stack(int);
 	~Stack();
-	int push(T element);
-	T pop(void);
+	bool push(T element);
+	bool pop(T &retval);
 
 private:
 	int sp, size;
@@ -26,24 +26,26 @@ Stack<T>::Stack(int s)
 }
 
 template <typename T>
-int Stack<T>::push(T element)
+bool Stack<T>::push(T element) /* should this be by reference? */
 {
 	if (sp+1 <= size)
 	{
 		data[sp] = element;
 		++sp;
-		return 0;
+		return true;
 	}
-	return -1; /* failed to push, stack is full */
+	return false; /* failed to push, stack is full */
 }
 
 template <typename T>
-T Stack<T>::pop(void) /* what's proper behavior for popping empty stack? */
+bool Stack<T>::pop(T &retval) /* what's proper behavior for popping empty stack? */
 {		
 	if (sp != 0)
 		--sp;
 
-	return data[sp];
+	retval = data[sp];
+
+	return true;
 }
 
 template <typename T>
